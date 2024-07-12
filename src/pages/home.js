@@ -1,49 +1,60 @@
 import { useState } from "react";
 import MediaCard from "../components/card";
+import Buttons from "../components/button";
+import { Link } from "react-router-dom";
+
+
+
+//useState,props(function)
+//when the delete is clicked card shoukd be deleted
+
+const Home = () => {
+
+  const [data, setData] = useState([
+    {
+      "topic": "Pizza",
+      "description": "To make a delicious homemade pizza, start by preheating on a lightly floured surface to your desired thickness."
+    },
+    {
+      "topic": "Burger",
+      "description": "A kaweesha is a sandwich dsadsa of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
+    },
+    {
+      "topic": "Burger",
+      "description": "A burger is a sandwich consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
+    }
+  ])
+
+  const handleDelete = (id) => {
+    //console.log("Card is deleted");
+    const newData = data.filter((blog, index) => index !== id)
+    setData(newData);
+
+
+
+  };
 
 
 
 
-  //useState,props(function)
-  //when the delete is clicked card shoukd be deleted
+  return (
 
-  const Home = () => {
+    <>
+      <div className="flex justify-end m-4 ">
+        <Link to="/addRecipe"><Buttons name="Add Recipe" /></Link>
+        
+      </div>
 
-    const [data, setData] = useState([
-      {
-        "topic": "Pizza",
-        "description": "To make a delicious homemade pizza, start by preheating on a lightly floured surface to your desired thickness."
-      },
-      {
-        "topic": "Burger",
-        "description": "A kaweesha is a sandwich dsadsa of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
-      }, 
-      {
-          "topic": "Burger",
-          "description": "A burger is a sandwich consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
-        } 
-    ])
+      <div className="grid grid-cols-4 gap-3 m-5 ">
+        {data.map((item, index) => (
 
-    const handleDelete = (id) => {
-      //console.log("Card is deleted");
-      const newData = data.filter((blog,index) =>index !== id)
-      setData(newData);
-
-  
-      
-    };
-
-    
+          <MediaCard id={index} topic={item.topic} description={item.description} handleDelete={handleDelete} />
+        ))}
+      </div>
+    </>
+  );
 
 
-    return (
-        <div className="grid grid-cols-4 gap-3 m-5 ">
-            {data.map((item, index) => (
-              
-                <MediaCard id={index} topic={item.topic} description={item.description} handleDelete={handleDelete}/>
-            ))}
-        </div>
-    );
 }
 
 export default Home;
