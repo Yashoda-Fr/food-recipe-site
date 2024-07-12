@@ -11,6 +11,9 @@ export default function FormPropsTextFields(props) {
           label={props.label}
           type={props.type}
           variant={props.variant}
+          value={props.value}
+          onChange={props.onChange}
+          name={props.name}
         />
       </div>
 

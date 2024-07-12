@@ -6,7 +6,7 @@ export default function Buttons(props) {
   return (
     <div>
       
-      <Button variant="contained">{props.name}</Button>
+      <Button  onClick={props.onClick} variant="contained">{props.name}</Button>
       
     </div>
   );
