@@ -1,18 +1,19 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function Input(props) {
+
+export default function FormPropsTextFields(props) {
   return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField color={props.color} id="standard-basic" label={props.label} variant="standard" />
-    </Box>
+
+    <div className='m-3'>     
+      <TextField
+          id={props.id}
+          label={props.label}
+          type={props.type}
+          variant={props.variant}
+        />
+      </div>
+
+
   );
 }
