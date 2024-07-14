@@ -10,11 +10,6 @@ import { Link } from 'react-router-dom';
 
 export default function MediaCard({ id, topic, description, handleDelete }) {
 
-
-
-
-
-
   return (
     <Card sx={{ maxWidth: 345, borderRadius: 5, boxShadow: 12 }}>
 
@@ -33,7 +28,7 @@ export default function MediaCard({ id, topic, description, handleDelete }) {
 
         <DeleteIcon className='text-red-600' onClick={() => handleDelete(id)} style={{ cursor: 'pointer  ' }} />
 
-        <Link to={`/updateRecipe?${id}`}>
+        <Link to={`/updateRecipe/${id}`}>
           <EditIcon className='text-blue-600 hover:text-black' style={{ cursor: 'pointer' }} />
         </Link>
 

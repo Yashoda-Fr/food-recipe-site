@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormPropsTextFields from '../components/textField';
 import Buttons from '../components/button';
 import { z } from 'zod';
+import { useParams } from 'react-router-dom';
+import { getRecipeById, updateRecipe } from '../service';
 
 
 const UpdateSchema = z.object({
@@ -17,6 +19,31 @@ const UpdateRecipe = () => {
     const[ingredients,setIngridients] = useState()
     const [fieldErrors, setFieldErrors] = useState({})
 
+    const{id}=useParams();
+
+
+    useEffect(()=>{
+        //fetch the data from backend
+        const fetchData = async () => {
+            try{
+                const response = await getRecipeById(id);
+                console.log(response)
+                setTitle(response.title)
+                setDescription(response.description)
+                setIngridients(response.ingredients)
+
+
+                
+
+            }catch(error){
+                console.log(error)
+
+            }
+        }
+        fetchData();
+
+    },[])
+
     const handleUpdate = (e) =>{
         //stop the page refreshing
         e.preventDefault()
@@ -28,8 +55,13 @@ const UpdateRecipe = () => {
             const fieldErrors = result.error.flatten().fieldErrors;
               setFieldErrors(fieldErrors)
         }else{
-           //data send to backend
-           console.log(result.data)
+           //data add to backend(update it)
+           updateRecipe(id,{title,description,ingredients})
+
+        //redirect to home page
+        window.location.href = '/'
+        
+
         }
 
     }
@@ -57,7 +89,10 @@ const UpdateRecipe = () => {
             </div>
             <div className="flex justify-center space-x-10 mt-5">
             <Buttons name="Cancel" onClick={handleCancel}/>
+
+            
             <Buttons name="Update" onClick={handleUpdate}/>
+            
             </div>
             
             </div>

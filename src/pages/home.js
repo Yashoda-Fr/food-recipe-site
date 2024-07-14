@@ -1,36 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MediaCard from "../components/card";
 import Buttons from "../components/button";
 import { Link } from "react-router-dom";
+import { deleteRecipe, getallRecipes } from "../service";
 
 
 
 //useState,props(function)
-//when the delete is clicked card shoukd be deleted
+//when the delete is clicked card should be deleted
 
 const Home = () => {
 
-  const [data, setData] = useState([
-    {
-      "topic": "Pizza",
-      "description": "To make a delicious homemade pizza, start by preheating on a lightly floured surface to your desired thickness."
-    },
-    {
-      "topic": "Burger",
-      "description": "A kaweesha is a sandwich dsadsa of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
-    },
-    {
-      "topic": "Burger",
-      "description": "A burger is a sandwich consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun."
+  const [data, setData] = useState([]);
+
+
+  useEffect( ()=>{
+
+    const fetchData = async () => {
+    try{
+      const response =await getallRecipes();
+      console.log(response)
+      setData(response)
+     
+    }catch(error){
+      console.log(error)
     }
-  ])
+  }
 
-  const handleDelete = (id) => {
+  fetchData();
+
+},[])
+
+
+
+
+
+
+
+
+  const handleDelete = async (id) => {
     //console.log("Card is deleted");
-    const newData = data.filter((blog, index) => index !== id)
-    setData(newData);
+    await deleteRecipe(id);
 
-
+    //refresh page after thos
+    window.location.href = '/';
 
   };
 
@@ -41,14 +54,16 @@ const Home = () => {
 
     <>
       <div className="flex justify-end m-4 ">
-        <Link to="/addRecipe"><Buttons name="Add Recipe" /></Link>
+        <Link to="/addRecipe">
+        <Buttons name="Add Recipe" />
+        </Link>
         
       </div>
 
       <div className="grid grid-cols-4 gap-3 m-5 ">
-        {data.map((item, index) => (
+        {data.map((item) => (
 
-          <MediaCard id={index} topic={item.topic} description={item.description} handleDelete={handleDelete} />
+          <MediaCard  id={item._id} topic={item.title} description={item.description} handleDelete={handleDelete} />
         ))}
       </div>
     </>

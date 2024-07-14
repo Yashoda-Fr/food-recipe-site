@@ -2,18 +2,21 @@ import React, { useState } from 'react';
 import FormPropsTextFields from '../components/textField';
 import Buttons from '../components/button';
 import { z } from 'zod';
+import { Addrecipe } from '../service';
 
 
 
-//step01 create a new schema
 
+const AddRecipe = () => {
+
+    //step01 create a new schema
+//zod is used to validate the form
 const addSchema = z.object({
     title: z.string().regex(/^[^\d]*$/, { message: "Must not contain numbers" }).min(1),
     description: z.string().regex(/^[^\d]*$/, { message: "Must not contain numbers" }).min(1),
     ingredients:z.string().min(1)
 })
 
-const AddRecipe = () => {
 
     const[title,setTitle] = useState()
     const[description,setDescription] = useState()
@@ -23,6 +26,7 @@ const AddRecipe = () => {
 
     const handleSubmit = (e) =>{
 
+        //when submit button is cklicked it will auto refresh the page(we dont want that)(only for submit button)
         //stop the page from refreshing
         e.preventDefault()
 
@@ -32,9 +36,17 @@ const AddRecipe = () => {
 
        if(!result.success){
               const fieldErrors = result.error.flatten().fieldErrors;
-                setFieldErrors(fieldErrors)
+             // console.log(result.error.flatten().fieldErrors)
+            setFieldErrors(fieldErrors)
        }else{
-        //data send to backend
+        
+        //data add to backend
+        Addrecipe({title,description,ingredients})
+
+        //redirect to home page\
+        window.location.href = '/'
+        
+
         console.log(result.data)
        }
     }
