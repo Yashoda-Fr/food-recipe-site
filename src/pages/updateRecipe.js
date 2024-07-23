@@ -27,7 +27,6 @@ const UpdateRecipe = () => {
         const fetchData = async () => {
             try{
                 const response = await getRecipeById(id);
-                console.log(response)
                 setTitle(response.title)
                 setDescription(response.description)
                 setIngridients(response.ingredients)

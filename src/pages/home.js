@@ -19,7 +19,7 @@ const Home = () => {
     const fetchData = async () => {
     try{
       const response =await getallRecipes();
-      console.log(response)
+      
       setData(response)
      
     }catch(error){
