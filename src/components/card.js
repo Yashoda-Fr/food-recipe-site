@@ -13,17 +13,21 @@ export default function MediaCard({ id, topic, description, handleDelete }) {
   return (
     <Card sx={{ maxWidth: 345, borderRadius: 5, boxShadow: 12 }}>
 
+      <Link to={`/description/${id}`}>
       <CardContent>
-
         <div className='text-2xl font-bold ' >
+        
           {topic}
+          
 
 
         </div>
         <div className='text-sm  px-2 py-4' >
           {description}
         </div>
+        
       </CardContent>
+      </Link>
       <CardActions className='flex justify-end'>
 
         <DeleteIcon className='text-red-600' onClick={() => handleDelete(id)} style={{ cursor: 'pointer  ' }} />
